@@ -14,6 +14,10 @@ Create a file that lists out tasks and precedence (see `./examples/test.proj`).
 
 `['Start', 'id1', 'id2', 'id3', 'End']`
 
-- Print project dot graph: `pm -f ./examples/test.proj dot | dot -Tsvg | timg -`
+- Print project dot graph: `pm -f ./examples/test.proj dot | dot -Tpng | timg -`
+
+![image](https://github.com/natefduncan/pm/assets/30030731/0a7221d7-9eca-4287-a05b-e9c1b31d0fc4)
 
 - Show project gantt chart: `pm -f ./examples/test.proj gantt-chart | timg -`
+
+![image](https://github.com/natefduncan/pm/assets/30030731/734c7d5a-2698-42c2-855b-3cd3374fcb32)
