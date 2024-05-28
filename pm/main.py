@@ -24,8 +24,8 @@ class Project:
             elif isinstance(s, Precedence):
                 self.precedences.append(s)
         for task in self.tasks: 
-            task_prec = [i.a for i in self.precedences if i.b == task.id]
-            task_prec = task_prec if task_prec else [None]
+            task_prec = ",".join([i.a for i in self.precedences if i.b == task.id])
+            task_prec = [task_prec] if task_prec else [None]
             self.p.add_activity(
                 activity_name=task.id,
                 activity_duration=task.duration,
