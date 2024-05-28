@@ -859,6 +859,7 @@ class Project():
     PROJECT = self.PROJECT
 
     CPM_SCHEDULE = dict()
+    CPM_SCHEDULE = {task: {'ES':0,'EF':0,'LS':0,'LF':0,'F':0,'D':PROJECT[task]['duration'],'IS':None,'TS':None,'NUM_IS':0,'NUM_TS':0} for task in PROJECT}
 
     if verbose:
       print('FORWARD PASS...\n')
@@ -960,6 +961,7 @@ class Project():
       RESOURCES_SUCCESORS[n1].append(sum(PROJECT[n2]['resources']))
 
     TOTAL_SUCCESORS = {'End':[]}
+    TOTAL_SUCCESORS = {**{'End':[]}, **{key: [] for key in PROJECT.keys()}}
     for task in list(PROJECT.keys())[::-1]:
       succesor = SUCCESORS[task]
       for act in  succesor:
