@@ -48,9 +48,10 @@ def critical_path(project):
     click.echo(project.p.get_critical_path())
 
 @cli.command
+@click.option("--early", is_flag=True, help="Display early schedule instead of late")
 @click.pass_obj
-def gantt_chart(project):
-    project.p.plot_gantt_cpm(early=True,save=False)
+def gantt_chart(project, early):
+    project.p.plot_gantt_cpm(early=early,save=False)
 
 @cli.command()
 @click.pass_obj
