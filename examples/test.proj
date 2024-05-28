@@ -1,0 +1,9 @@
+#ID: DESCRIPTION (HOURS, RESOURCES)
+id1: Description (10, [1])
+id2: Description2 (5, [1])
+id3: Description3 (7, [1])
+id4: Description4 (2, [1])
+
+# PRECEDENCE
+id1 -> id2
+id2 -> id3
