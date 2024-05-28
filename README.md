@@ -8,6 +8,21 @@ Project Scheduling CLI to simplify project management tasks. This uses the [chec
 
 ## Usage
 
+```
+Usage: pm [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  -f, --file-path TEXT
+  --help                Show this message and exit.
+
+Commands:
+  critical-path
+  dot
+  gantt-chart
+```
+
+## Examples
+
 Create a file that lists out tasks and precedence (see `./examples/test.proj`).
 
 - Print project critical path: `pm -f ./examples/test.proj critical-path`
