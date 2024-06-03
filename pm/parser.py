@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Tuple
 from parsy import string, regex, seq, eof
 
 # utilities
@@ -16,8 +17,22 @@ integer = regex(r"[0-9]+").map(int)
 id = regex(r"[a-zA-Z0-9]+").map(str)
 desc = regex(r"[a-zA-Z0-9 ]+").map(str)
 newline = regex(r"\n+")
+lcurly = lexeme(string("{"))
+rcurly = lexeme(string("}"))
 
 array = lbracket >> integer.sep_by(comma) << rbracket
+
+@dataclass
+class KeyValue:
+    key: str
+    value: str
+
+keyvalue = seq(
+    key=lexeme(id) << lexeme(string("=")),
+    value=lexeme(id)
+)
+
+options = lcurly >> keyvalue.sep_by(comma) << rcurly
 
 @dataclass
 class Task:
@@ -25,12 +40,14 @@ class Task:
     desc: str
     duration: int
     resources: list[int]
+    options: list[Tuple[str, str]]
     
 task = seq(
     id=id << colon, 
     desc=desc,
     duration=lparen >> integer << comma,
-    resources=array << rparen
+    resources=array << rparen,
+    options=options.optional(),
 ).combine_dict(Task)
 
 @dataclass

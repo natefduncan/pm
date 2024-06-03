@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 import click
+import pydot
 
 import pm.cheche_pm 
 from pm.parser import doc, Task, Precedence
@@ -51,12 +52,26 @@ def critical_path(project):
 @click.option("--early", is_flag=True, help="Display early schedule instead of late")
 @click.pass_obj
 def gantt_chart(project, early):
+
     project.p.plot_gantt_cpm(early=early,save=False)
 
 @cli.command()
 @click.pass_obj
 def dot(project):
-    project.p.plot_network_diagram(plot_type = 'dot')
+    dotgraph = pydot.Dot(graph_type='digraph', strict=True, rankdir="LR")
+    for task in project.tasks:
+        options = {i["key"]:i["value"] for i in task.options} if task.options else {}
+        if "fillcolor" not in options:
+            options["fillcolor"] = "white"
+        dotgraph.add_node(
+            pydot.Node(task.id, label=task.id, shape="rectangle", style="filled", **options)
+        )
+
+    for p in project.precedences:
+        dotgraph.add_edge(
+            pydot.Edge(p.a, p.b)
+        )
+    click.echo(dotgraph.to_string())
 
 if __name__=="__main__":
     cli()
